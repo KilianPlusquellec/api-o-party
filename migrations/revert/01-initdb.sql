@@ -2,6 +2,10 @@
 
 BEGIN;
 
--- XXX Add DDLs here.
+DROP TABLE "participation";
+DROP TABLE "event";
+DROP TABLE "user";
+
+DROP DOMAIN "email";
 
 COMMIT;

@@ -2,6 +2,8 @@
 
 BEGIN;
 
--- XXX Add verifications here.
+SELECT * 
+FROM "user", "event", "participation"
+WHERE false;
 
 ROLLBACK;
