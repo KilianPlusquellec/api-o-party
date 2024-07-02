@@ -22,6 +22,8 @@ sqitch add initdb -n "init"
 
 sqitch deploy --verif ou juste sqitch deploy
 
-psql -d -f <data/... chemin du seeding.sql>
+psql -d oparty -f /data/seeding.sql
+
+psql -d oparty
 ```
 
