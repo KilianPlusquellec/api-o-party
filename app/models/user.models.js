@@ -1,5 +1,5 @@
-const { DataTypes, Model } = require('sequelize');
-const sequelize = require('../db/client-sequelize');
+import { DataTypes, Model } from 'sequelize';
+import sequelize from '../config/pg.client.js';
 
 class User extends Model {}
 
@@ -8,31 +8,31 @@ User.init({
     type: DataTypes.TEXT,
     allowNull: false,
   },
-  description: {
+  last_name: {
     type: DataTypes.TEXT,
     allowNull: false,
   },
-  description: {
+  birth_date: {
+    type: DataTypes.DATE,
+    allowNull: false,
+  },
+  address: {
     type: DataTypes.TEXT,
     allowNull: false,
   },
-  description: {
+  email: {
     type: DataTypes.TEXT,
     allowNull: false,
   },
-  description: {
+  password: {
     type: DataTypes.TEXT,
     allowNull: false,
   },
-  description: {
+  about: {
     type: DataTypes.TEXT,
     allowNull: false,
   },
-  description: {
-    type: DataTypes.TEXT,
-    allowNull: false,
-  },
-  description: {
+  profil_picture: {
     type: DataTypes.TEXT,
     allowNull: false,
   },
@@ -41,13 +41,4 @@ User.init({
   tableName: 'user',
 });
 
-module.exports = Answer;
-
-"first_name" text NOT NULL,
-"last_name" text NOT NULL,
-"birth_date" DATE NOT NULL,
-"address" text NOT NULL,
-"email" email NOT NULL UNIQUE,
-"password" text NOT NULL,
-"about" text,
-"profil_picture" text,
+export default User;

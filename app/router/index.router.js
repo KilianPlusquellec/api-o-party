@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import userController from '../controllers/user.controller.js';
-import eventController from '../controllers/event.controller.js';
-import participationController from '../controllers/participation.controller.js'
+import userController from '../controllers/userController.js';
+import eventController from '../controllers/eventController.js';
+import participationController from '../controllers/participationController.js'
 
 
 const router = Router();
