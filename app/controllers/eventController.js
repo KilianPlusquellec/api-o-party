@@ -1,3 +1,4 @@
+import Sequelize from 'sequelize';
 import { z } from 'zod';
 import { Event } from '../models/index.models.js';
 
@@ -10,9 +11,9 @@ const eventSchema = z.object({
   finish_date: z.preprocess((arg) => {
     if (typeof arg === "string" || arg instanceof Date) return new Date(arg);
   }, z.date()),
-  start_hour: z.string().regex(/^([01]\d|2[0-3]):([0-5]\d):([0-5]\d)$/), // Assurez-vous que c'est une heure valide au format HH:MM:SS
+  start_hour: z.string().regex(/^([01]\d|2[0-3]):([0-5]\d):([0-5]\d)$/), // pour s'assurer que c'est une heure valide au format HH:MM:SS
   address: z.string().nonempty(),
-  location: z.tuple([z.number(), z.number()]), // Assurez-vous que c'est un point valide
+  location: z.tuple([z.number(), z.number()]), // pour s'assurer que c'est un point valide
   privacy_type: z.boolean().default(false),
   picture: z.string().optional(),
   max_attendee: z.number().int().nonnegative(),
@@ -21,6 +22,8 @@ const eventSchema = z.object({
 });
 
 export default {
+
+//-------CREER UN EVENEMENT -------------------------------------------------------------------------------------------------//
 
   async createEvent(req, res) {
 
@@ -36,18 +39,56 @@ export default {
     }
   },
 
-  async getEvent(req, res) {
+//-------TROUVER DES EVENEMENTS PRES DE CHEZ SOI----------------------------------------------------------------------------//
 
+async getEvent(req, res) {
+
+    const { latitude, longitude } = req.query;
+    const pointWKT = `SRID=4326;POINT(${longitude} ${latitude})`; // Formattage de la chaîne WKT  (Well-Known Text)
+  
     try {
-    
-      const events = await Event.findAll();
-    
+      
+      const events = await Event.findAll({
+      
+        attributes: {
+          include: [
+            [
+              Sequelize.fn(
+                'ST_Distance',
+                Sequelize.col('location'),
+                Sequelize.fn('ST_GeogFromText', pointWKT)
+              ),
+              'distance'
+            ]
+          ]
+        },
+      
+        where: Sequelize.where(
+          Sequelize.fn(
+            'ST_DWithin', //pour déterminer si deux objets géométriques sont à une distance spécifique ou inférieure l'un de l'autre.
+            Sequelize.col('location'),
+            Sequelize.fn('ST_GeogFromText', pointWKT),  // Retourne la localisation
+            200000 // Dans un rayon de 200 km (200 000 mètres)
+          ),
+          true
+        ),
+      
+        order: Sequelize.literal('distance')
+      
+      });
+
+      if (!events) {
+        return res.status(404).json({ error: 'Events not found' });
+      }
+  
       res.status(200).json(events);
-    
+
     } catch (error) {
       res.status(400).json({ error });
     }
   },
+  
+//-------TROUVER UN EVENEMENT ----------------------------------------------------------------------------------------------------//
 
   async getOneEvent(req, res) {
     
@@ -56,11 +97,18 @@ export default {
       const event = await Event.findByPk(req.params.id);
     
       res.status(200).json(event);
+      
+      if (!event) {
+        return res.status(404).json({ error: 'Event not found' });
+      } 
     
     } catch (error) {
       res.status(400).json({ error });
     }
   },
+
+  
+  //-------MODIFIER UN EVENEMENT -------------------------------------------------------------------------------------------------//
 
   async updateEvent(req, res) {
     
@@ -81,7 +129,9 @@ export default {
       res.status(400).json({ error });
     }
   },
-  
+
+  //-------SUPPRIMER UN EVENEMENT ------------------------------------------------------------------------------------------------//
+
   async deleteEvent(req, res) {
     
     try {
