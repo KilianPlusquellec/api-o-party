@@ -1,6 +1,11 @@
-import pg from 'pg';
+import 'dotenv/config';
+import { Sequelize } from 'sequelize';
 
-const client = new pg.Client(process.env.PGURL);
-await client.connect();
+const sequelize = new Sequelize(process.env.PGURL, {
+  define: {
+    undefined: true,
+  },
+  logging: false,
+});
 
-export default client;
+export default sequelize;

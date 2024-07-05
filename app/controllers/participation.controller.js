@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { Participation } from '../models/index.models.js';
+import { Participation } from '../models/index.model.js';
 
 //--------------DEMANDE DE PARTICIPATION A UN EVENT------------
   

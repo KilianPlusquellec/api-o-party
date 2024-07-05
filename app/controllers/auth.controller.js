@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import { z } from 'zod';
-import { User } from '../models/index.models.js';
+import { User } from '../models/index.model.js';
 
 export default {
 

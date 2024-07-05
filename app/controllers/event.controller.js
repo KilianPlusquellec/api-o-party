@@ -1,6 +1,5 @@
-import Sequelize from 'sequelize';
 import { z } from 'zod';
-import { Event } from '../models/index.models.js';
+import { Event } from '../models/index.model.js';
 
 const eventSchema = z.object({
   title: z.string().nonempty(),
@@ -44,36 +43,36 @@ export default {
 async getEvent(req, res) {
 
     const { latitude, longitude } = req.query;
-    const pointWKT = `SRID=4326;POINT(${longitude} ${latitude})`; // Formattage de la chaîne WKT  (Well-Known Text)
+    const pointWKT = `SRID=4326;POINT(${latitude}${longitude})`; // Formattage de la chaîne WKT  (Well-Known Text)
   
     try {
       
       const events = await Event.findAll({
       
-        attributes: {
-          include: [
-            [
-              Sequelize.fn(
-                'ST_Distance',
-                Sequelize.col('location'),
-                Sequelize.fn('ST_GeogFromText', pointWKT)
-              ),
-              'distance'
-            ]
-          ]
-        },
+        // attributes: {
+        //   include: [
+        //     [
+        //       Sequelize.fn(
+        //         'ST_Distance',
+        //         Sequelize.col('location'),
+        //         Sequelize.fn('ST_GeogFromText', pointWKT)
+        //       ),
+        //       'distance'
+        //     ]
+        //   ]
+        // },
       
-        where: Sequelize.where(
-          Sequelize.fn(
-            'ST_DWithin', //pour déterminer si deux objets géométriques sont à une distance spécifique ou inférieure l'un de l'autre.
-            Sequelize.col('location'),
-            Sequelize.fn('ST_GeogFromText', pointWKT),  // Retourne la localisation
-            200000 // Dans un rayon de 200 km (200 000 mètres)
-          ),
-          true
-        ),
+        // where: Sequelize.where(
+        //   Sequelize.fn(
+        //     'ST_DWithin', //pour déterminer si deux objets géométriques sont à une distance spécifique ou inférieure l'un de l'autre.
+        //     Sequelize.col('location'),
+        //     Sequelize.fn('ST_GeogFromText', pointWKT),  // Retourne la localisation
+        //     200000 // Dans un rayon de 200 km (200 000 mètres)
+        //   ),
+        //   true
+        // ),
       
-        order: Sequelize.literal('distance')
+        // order: Sequelize.literal('distance')
       
       });
 
@@ -96,12 +95,12 @@ async getEvent(req, res) {
     
       const event = await Event.findByPk(req.params.id);
     
-      res.status(200).json(event);
       
       if (!event) {
         return res.status(404).json({ error: 'Event not found' });
       } 
-    
+      
+      return res.status(200).json(event);
     } catch (error) {
       res.status(400).json({ error });
     }

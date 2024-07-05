@@ -33,24 +33,27 @@ Event.init({
     allowNull: false,
   },
   privacy_type: {
-    type: DataTypes.BOOLEEN,
+    type: DataTypes.BOOLEAN,
     allowNull: false,
+    defaultValue: false,
   },
   picture: {
     type: DataTypes.TEXT,
     allowNull: true,
   },
   max_attendee: {
-    type: DataTypes.INT,
+    type: DataTypes.INTEGER, 
     allowNull: false,
   },
   status: {
-    type: DataTypes.BOOLEEN,
+    type: DataTypes.BOOLEAN,
     allowNull: false,
+    defaultValue: false,
   },
   pmr_access: {
-    type: DataTypes.BOOLEEN,
+    type: DataTypes.BOOLEAN,
     allowNull: false,
+    defaultValue: false,
   },
 }, {
   sequelize,
@@ -58,4 +61,5 @@ Event.init({
 });
 
 export default Event;
+
 

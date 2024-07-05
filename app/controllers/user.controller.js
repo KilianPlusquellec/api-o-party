@@ -1,4 +1,6 @@
-import { User } from '../models/index.models.js';
+import { User } from '../models/index.model.js';
+
+ //------ACCEDER A SON PROFIL----------------------------------------------------//
 
 export default {
   async getMyUser(req, res) {
@@ -7,25 +9,35 @@ export default {
     
       const user = await User.findByPk(req.user.id);
     
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+      
       res.status(200).json(user);
-    
+          
     } catch (error) {
       res.status(400).json({ error });
     }
   },
 
+  //------TROUVER UN UTILISATEUR----------------------------------------------------//
   async getUser(req, res) {
     
     try {
     
       const user = await User.findByPk(req.params.id,);
     
-      res.status(200).json(user);
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
     
+      res.status(200).json(user);
+
     } catch (error) {
       res.status(400).json({ error });
     }
   },
+ //------MODIFIER SON PROFIL----------------------------------------------------//
 
   async updateUser(req, res) {
     
@@ -36,6 +48,7 @@ export default {
       address: z.string().min(1).max(255),
       email: z.string().email().nonempty(),
       password: z.string().min(8).max(100).nonempty(),
+      password_confirmation: z.string().min(8).max(100).nonempty(),
       about: z.string().optional().max(500),
       profil_picture: z.string().optional().url(),
     });
@@ -46,6 +59,10 @@ export default {
     
       const user = await User.findByPk(req.user.id);
     
+      if (req.body.password !== req.body.password_confirmation) {
+        return res.status(400).json({ error: 'Passwords do not match' });
+      }
+
       await user.update(validatedData);
     
       res.status(200).json(user);
@@ -54,7 +71,8 @@ export default {
       res.status(400).json({ error });
     }
   },
-
+ //------SUPPRIMER SON COMPTE----------------------------------------------------//
+ 
   async deleteMyUser(req, res) {
       
     try {

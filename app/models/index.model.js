@@ -1,7 +1,7 @@
 // Ce fichier va servir à regrouper tous les modèles de notre application
-import User from './user.models.js';
-import Event from './event.models.js';
-import Participation from './participation.models.js';
+import Event from './event.model.js';
+import Participation from './participation.model.js';
+import User from './user.model.js';
 
 // Mon user à plusieurs participations
 User.hasMany(Participation, { 
@@ -27,5 +27,6 @@ Participation.belongsTo(Event, {
   as: 'event'
 });
 
-export default { User , Event , Participation}
+//export default { User , Event , Participation}
 
+export { Event, Participation, User };
