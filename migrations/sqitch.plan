@@ -2,3 +2,4 @@
 %project=oparty
 
 01-initdb 2024-07-02T08:43:04Z Kilian <kilian.plusquellec@oclock.school> # init
+02-update_table 2024-07-05T14:03:43Z Kilian <kilian.plusquellec@oclock.school> # update table and seeding
