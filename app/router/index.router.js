@@ -30,7 +30,7 @@ router.delete('/events/:id', eventController.deleteEvent); //supprimer son évè
 
 router.post('/events/:id/participate', participationController.approvalRequest); //l'hôte demande à participer à un évènement
 router.post('/events/:id/participate', participationController.userApproval); //l'hôte confirme une participation à un évènement
-router.get('/events/:id/participate', participationController.cancelParticipation); //annuler sa participation à un évènement
+router.delete('/events/:id/participate', participationController.cancelParticipation); //annuler sa participation à un évènement
 router.get('/events/:id/participate', participationController.listParticipation); //liste des participants
 
 
