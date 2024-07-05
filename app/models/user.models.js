@@ -28,6 +28,10 @@ User.init({
     type: DataTypes.TEXT,
     allowNull: false,
   },
+  password_confirmation: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+  },
   about: {
     type: DataTypes.TEXT,
     allowNull: false,

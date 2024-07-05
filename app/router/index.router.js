@@ -1,15 +1,16 @@
 import { Router } from 'express';
-import userController from '../controllers/userController.js';
-import eventController from '../controllers/eventController.js';
-import participationController from '../controllers/participationController.js'
+import userController from '../controllers/user.controller.js';
+import eventController from '../controllers/event.controller.js';
+import participationController from '../controllers/participation.controller.js'
+import authController from '../controllers/auth.controller.js';
 
 
 const router = Router();
 
 // Auth
 
-router.post('/register', userController.registerUser); //s'inscrire
-router.post('/login', userController.loginUser); //s'identifier
+router.post('/register', authController.registerUser); //s'inscrire
+router.post('/login', authController.loginUser); //s'identifier
 
 //Utilisateur
 
@@ -28,8 +29,8 @@ router.delete('/events/:id', eventController.deleteEvent); //supprimer son évè
 
 // Participation
 
-router.post('/events/:id/participate', participationController.approvalRequest); //l'hôte demande à participer à un évènement
-router.post('/events/:id/participate', participationController.userApproval); //l'hôte confirme une participation à un évènement
+router.post('/events/:id/participate', participationController.approvalRequest); //l'utilisateur demande à participer à un évènement
+router.post('/events/:id/participate', participationController.hostApproval); //l'hôte confirme une participation à un évènement
 router.delete('/events/:id/participate', participationController.cancelParticipation); //annuler sa participation à un évènement
 router.get('/events/:id/participate', participationController.listParticipation); //liste des participants
 
