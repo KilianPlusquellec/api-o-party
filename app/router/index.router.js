@@ -3,7 +3,7 @@ import authController from '../controllers/auth.controller.js';
 import eventController from '../controllers/event.controller.js';
 import participationController from '../controllers/participation.controller.js';
 import userController from '../controllers/user.controller.js';
-
+import { authenticateToken } from '../middlewears/jwt.middlewear.js';
 
 const router = Router();
 
@@ -14,10 +14,10 @@ router.post('/login', authController.loginUser); //s'identifier
 
 //Utilisateur
 
-router.get('/user/me', userController.getMyUser); //accéder à son profil
+router.get('/user/me', authenticateToken, userController.getMyUser); //accéder à son profil
 router.get('/user/:id', userController.getUser); //accéder à un profil
-router.patch('/user/me', userController.updateUser); //modifier son profil
-router.delete('/user/me', userController.deleteMyUser); //supprimer son profil
+router.patch('/user/me', authenticateToken, userController.updateUser); //modifier son profil
+router.delete('/user/me', authenticateToken, userController.deleteMyUser); //supprimer son profil
 
 // Événements
 

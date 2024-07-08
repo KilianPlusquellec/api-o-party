@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import { z } from 'zod';
 import { User } from '../models/index.model.js';
 
@@ -12,31 +13,42 @@ export default {
       
       first_name: z.string().min(1).max(50),
       last_name: z.string().min(1).max(50),
-      birth_date: z.date(),
+      //birth_date: z.date(),
+      birth_date: z.string().transform((value) => new Date(value)).refine(date => !isNaN(date.valueOf()), {
+        message: "Invalid date format",
+      }),
       address: z.string().min(1).max(255),
       email: z.string().email().nonempty(),
       password: z.string().min(8).max(100).nonempty(),
       password_confirmation: z.string().min(8).max(100).nonempty(),
-      about: z.string().optional().max(500),
-      profil_picture: z.string().optional().url(),
+      about: z.string().max(500).optional(),
+      profil_picture: z.string().url().optional(),
 
     });
 
     try {
-
-      const validatedData = userSchema.parse(req.body);
-
+      const {
+        password,
+        password_confirmation,
+        ...validatedData
+      } = userSchema.parse(req.body);
+  
       if (password !== password_confirmation) {
         return res.status(401).json({ error: 'Invalid email or password' });
       }
-
-      const hashedPassword = await bcrypt.hash(validatedData.password, 10);
-
-      const user = User.create({ ...validatedData, password: hashedPassword });
+  
+      const hashedPassword = await bcrypt.hash(password, 10);
+  
+      const user = User.create({  ...validatedData, password: hashedPassword, password_confirmation: hashedPassword });
       
       res.status(201).json(user);
     } catch (error) {
-      res.status(400).json({ error });
+      res.status(400).json({ error: {
+        name: error.name,
+        message: error.message,
+        stack: error.stack,
+        details: error.details
+      }  });
     }
   },
 //-------LOGIN----------------------------------------------------
@@ -64,7 +76,13 @@ export default {
         return res.status(401).json({ error: 'Invalid email or password' });
       }
 
-      res.status(200).json(user);
+        // Générer un token pour l'utilisateur connecté
+      const token = jwt.sign({ id: user.id }, process.env.JWT_PRIVATE_KEY, { expiresIn: '1h' });
+
+      // Renvoyer le token dans la réponse
+      res.status(200).json({ user, token });
+
+      //res.status(200).json(user);
     } catch (error) {
       res.status(400).json({ error });
     }
