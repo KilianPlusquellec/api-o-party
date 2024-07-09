@@ -55,6 +55,10 @@ Event.init({
     allowNull: false,
     defaultValue: false,
   },
+  zip_code_city: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+  },
 }, {
   sequelize,
   tableName: 'event',
