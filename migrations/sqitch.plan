@@ -3,3 +3,4 @@
 
 01-initdb 2024-07-02T08:43:04Z Kilian <kilian.plusquellec@oclock.school> # init
 02-update_table 2024-07-05T14:03:43Z Kilian <kilian.plusquellec@oclock.school> # update table and seeding
+03-add_table.sql 2024-07-09T08:05:49Z Kilian <kilian.plusquellec@oclock.school> # add table zip_code_city
