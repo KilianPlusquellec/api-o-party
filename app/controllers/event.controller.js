@@ -1,24 +1,7 @@
-import { z } from 'zod';
+import { Op } from 'sequelize';
+import sequelize from '../config/pg.client.js';
 import { Event } from '../models/index.model.js';
-
-const eventSchema = z.object({
-  title: z.string().nonempty(),
-  description: z.string().nonempty(),
-  start_date: z.preprocess((arg) => {
-    if (typeof arg === "string" || arg instanceof Date) return new Date(arg);
-  }, z.date()),
-  finish_date: z.preprocess((arg) => {
-    if (typeof arg === "string" || arg instanceof Date) return new Date(arg);
-  }, z.date()),
-  start_hour: z.string().regex(/^([01]\d|2[0-3]):([0-5]\d):([0-5]\d)$/), // pour s'assurer que c'est une heure valide au format HH:MM:SS
-  address: z.string().nonempty(),
-  location: z.tuple([z.number(), z.number()]), // pour s'assurer que c'est un point valide
-  privacy_type: z.boolean().default(false),
-  picture: z.string().optional(),
-  max_attendee: z.number().int().nonnegative(),
-  status: z.boolean().default(false),
-  pmr_access: z.boolean().default(false),
-});
+import { eventSchema } from '../schemas/event.schema.js';
 
 export default {
 
@@ -41,51 +24,56 @@ export default {
 //-------TROUVER DES EVENEMENTS PRES DE CHEZ SOI----------------------------------------------------------------------------//
 
 async getEvent(req, res) {
+  const { latitude, longitude, searchfield, searchtext} = req.query;
 
-    const { latitude, longitude } = req.query;
-    const pointWKT = `SRID=4326;POINT(${latitude}${longitude})`; // Formattage de la chaîne WKT  (Well-Known Text)
-  
-    try {
-      
-      const events = await Event.findAll({
-      
-        // attributes: {
-        //   include: [
-        //     [
-        //       Sequelize.fn(
-        //         'ST_Distance',
-        //         Sequelize.col('location'),
-        //         Sequelize.fn('ST_GeogFromText', pointWKT)
-        //       ),
-        //       'distance'
-        //     ]
-        //   ]
-        // },
-      
-        // where: Sequelize.where(
-        //   Sequelize.fn(
-        //     'ST_DWithin', //pour déterminer si deux objets géométriques sont à une distance spécifique ou inférieure l'un de l'autre.
-        //     Sequelize.col('location'),
-        //     Sequelize.fn('ST_GeogFromText', pointWKT),  // Retourne la localisation
-        //     200000 // Dans un rayon de 200 km (200 000 mètres)
-        //   ),
-        //   true
-        // ),
-      
-        // order: Sequelize.literal('distance')
-      
-      });
+  if (latitude && longitude) {
+    const lat = parseFloat(latitude);
+    const lon = parseFloat(longitude);
 
-      if (!events) {
-        return res.status(404).json({ error: 'Events not found' });
-      }
-  
-      res.status(200).json(events);
-
-    } catch (error) {
-      res.status(400).json({ error });
+    if (isNaN(lat) || isNaN(lon)) {
+      return res.status(400).json({ error: 'Invalid latitude or longitude' });
     }
-  },
+
+    const radius = 50000; // 50 km in meters
+
+    try {
+      const eventsWithinRadiusQuery = `
+        SELECT *, 
+        ST_Distance(
+          ST_GeogFromText('SRID=4326;POINT(${lat} ${lon})'),
+          event.location
+        ) AS distance
+        FROM event 
+        WHERE 
+        ST_Distance(
+          ST_GeogFromText('SRID=4326;POINT(${lat} ${lon})'),
+          event.location
+        ) <= ${radius}
+        ORDER BY distance ASC;
+      `;
+
+      const eventsWithinRadius = await sequelize.query(eventsWithinRadiusQuery, { type: sequelize.QueryTypes.SELECT });
+      return res.status(200).json(eventsWithinRadius);
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
+    }
+  } else if (searchfield && searchtext) {
+    try {
+      const events = await Event.findAll({
+        where: {
+          [searchfield]: {
+            [Op.iLike]: `%${searchtext}%`
+          }
+        }
+      });
+      return res.status(200).json(events);
+    } catch (error) {
+      return res.status(400).json({ error: error.message });
+    }
+  } else {
+    return res.status(400).json({ error: 'Search field and text are required' });
+  }
+},
   
 //-------TROUVER UN EVENEMENT ----------------------------------------------------------------------------------------------------//
 
