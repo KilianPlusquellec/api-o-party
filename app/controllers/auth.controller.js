@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { z } from 'zod';
 import { User } from '../models/index.model.js';
+import { loginSchema, registerSchema } from '../schemas/auth.schema.js';
 
 export default {
 
@@ -9,29 +9,12 @@ export default {
   
   async registerUser(req, res) {
 
-    const userSchema = z.object({
-      
-      first_name: z.string().min(1).max(50),
-      last_name: z.string().min(1).max(50),
-      //birth_date: z.date(),
-      birth_date: z.string().transform((value) => new Date(value)).refine(date => !isNaN(date.valueOf()), {
-        message: "Invalid date format",
-      }),
-      address: z.string().min(1).max(255),
-      email: z.string().email().nonempty(),
-      password: z.string().min(8).max(100).nonempty(),
-      password_confirmation: z.string().min(8).max(100).nonempty(),
-      about: z.string().max(500).optional(),
-      profil_picture: z.string().url().optional(),
-
-    });
-
     try {
       const {
         password,
         password_confirmation,
         ...validatedData
-      } = userSchema.parse(req.body);
+      } = registerSchema.parse(req.body);
   
       if (password !== password_confirmation) {
         return res.status(401).json({ error: 'Invalid email or password' });
@@ -54,11 +37,6 @@ export default {
 //-------LOGIN----------------------------------------------------
 
   async loginUser(req, res) {
-
-    const loginSchema = z.object({
-      email: z.string().email().nonempty(),
-      password: z.string().nonempty(),
-    });
 
     try {
 

@@ -1,14 +1,8 @@
-import { z } from 'zod';
+import { participationSchema } from '../schemas/participation.shema.js';
 import { Participation } from '../models/index.model.js';
 
 //--------------DEMANDE DE PARTICIPATION A UN EVENT------------
   
-const participationSchema = z.object({
-  approval: z.boolean().default(false),
-  user_id: z.number().int(),
-  event_id: z.number().int(),
-});
-
 export default {
   async approvalRequest(req, res) {
     try {
