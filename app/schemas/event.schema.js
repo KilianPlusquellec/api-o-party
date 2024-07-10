@@ -11,7 +11,16 @@ export const eventSchema = z.object({
   }, z.date()),
   start_hour: z.string().regex(/^([01]\d|2[0-3]):([0-5]\d):([0-5]\d)$/), // pour s'assurer que c'est une heure valide au format HH:MM:SS
   address: z.string().nonempty(),
-  location: z.tuple([z.number(), z.number()]), // pour s'assurer que c'est un point valide
+  location: z.string().refine((data) => {
+    try {
+      const json = JSON.parse(data);
+      return json.type === "Point" && Array.isArray(json.coordinates) && json.coordinates.length === 2;
+    } catch {
+      return false;
+    }
+  }, {
+    message: "Invalid GeoJSON for location",
+  }),
   privacy_type: z.boolean().default(false),
   picture: z.string().optional(),
   max_attendee: z.number().int().nonnegative(),

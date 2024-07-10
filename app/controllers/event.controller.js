@@ -143,6 +143,7 @@ async getEvent(req, res) {
         status: req.body.status,
         pmr_access: req.body.pmr_access,
         zip_code_city: req.body.zip_code_city,
+        user_id: req.body.user_id,
       };
       
       const validatedData = eventSchema.parse(updatedEvent);
