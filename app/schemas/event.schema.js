@@ -17,4 +17,6 @@ export const eventSchema = z.object({
   max_attendee: z.number().int().nonnegative(),
   status: z.boolean().default(false),
   pmr_access: z.boolean().default(false),
+  zip_code_city: z.string().nonempty(),
+  user_id: z.number().int()
 });

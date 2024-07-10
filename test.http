@@ -46,13 +46,11 @@ Content-Type: application/json
 
 ### Utilisation du token pour accéder à la route de son profil protégée
 GET {{endpoint}}/user/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzIwNDQ5OTA5LCJleHAiOjE3MjA0NTM1MDl9.bzzLghGakLjX93JoOAGld11UjYAj9jvbGnCjECK6n8g
-
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNjMzMzkzLCJleHAiOjE3MjA2MzY5OTN9.yTuI935hjy_y3Qd-x3-gJEktn9yI60jL0ubLWHAVKHs
 
 ### Utilisation du token pour accéder à la route modif du profil protégée
 patch {{endpoint}}/user/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNzIwNDQ5OTA5LCJleHAiOjE3MjA0NTM1MDl9.bzzLghGakLjX93JoOAGld11UjYAj9jvbGnCjECK6n8g
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNjMzMzkzLCJleHAiOjE3MjA2MzY5OTN9.yTuI935hjy_y3Qd-x3-gJEktn9yI60jL0ubLWHAVKHs
 Content-Type: application/json
 
 {
@@ -70,7 +68,7 @@ Content-Type: application/json
 
 ### delete son profil
 DELETE {{endpoint}}/user/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzIwNDQ4MzEyLCJleHAiOjE3MjA0NTE5MTJ9.IhjNvrg1J1tuYV8qD_iL3XrrMHk7GmlEwcYMANyRgQo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNjI5MTE5LCJleHAiOjE3MjA2MzI3MTl9.b4OQ3-8WlsiBXnex7H0ciMSd1k9azsjf7b3GkmpjHYQ
 
 ### Test getEvent avec latitude et longitude
 GET {{endpoint}}/events?latitude=48.8549158&longitude=2.3128591
@@ -80,3 +78,26 @@ Content-Type: application/json
 ### Test getEvent avec searchfield et searchtext
 GET {{endpoint}}/events?searchfield=title&searchtext=Concert%20Rock
 Content-Type: application/json
+
+
+### Modifier son évènement
+patch {{endpoint}}/event/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNjMzMzkzLCJleHAiOjE3MjA2MzY5OTN9.yTuI935hjy_y3Qd-x3-gJEktn9yI60jL0ubLWHAVKHs
+Content-Type: application/json
+
+{
+  "title": "Soirée électro",
+  "description": "découvrez le meilleur DJ de Lyon.",
+  "start_date": "2024-08-01",
+  "start_hour": "21:00:00",
+  "finish_date": "2024-08-01",
+  "address": "8, rue des Lilas",
+  "location": [45.5603292, 4.8064673],
+  "privacy_type": false,
+  "picture": "https://avatars.githubusercontent.com/u/157673098?v=4",
+  "max_attendee": 120,
+  "status": false,
+  "pmr_access": true,
+  "zip_code_city": "69000 Lyon",
+  "user_id": 1
+}

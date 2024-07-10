@@ -24,8 +24,8 @@ router.delete('/user/me', authenticateToken, userController.deleteMyUser); //sup
 router.post('/events', eventController.createEvent); //créer un évènement
 router.get('/events', eventController.getEvent); //accéder aux évènements
 router.get('/event/:id', eventController.getOneEvent); //accéder aux détails d'un évènement
-router.patch('/event/:id', eventController.updateEvent); //modifier son évènement
-router.delete('/event/:id', eventController.deleteEvent); //supprimer son évènement
+router.patch('/event/:id', authenticateToken, eventController.updateEvent); //modifier son évènement
+router.delete('/event/me', authenticateToken, eventController.deleteEvent); //supprimer son évènement
 
 // Participation
 

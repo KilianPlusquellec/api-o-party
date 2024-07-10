@@ -76,14 +76,22 @@ async getEvent(req, res) {
 },
   
 //-------TROUVER UN EVENEMENT ----------------------------------------------------------------------------------------------------//
-
+  
   async getOneEvent(req, res) {
     
+    const eventId = parseInt(req.params.id);
+    if (isNaN(eventId) || eventId < 1) {
+      return res.status(400).json({ error: 'Invalid event ID' });
+    }
+
     try {
     
-      const event = await Event.findByPk(req.params.id);
+      const event = await Event.findByPk(eventId, {
+        include: [{
+          association: 'host',
+        }],
+      });
     
-      
       if (!event) {
         return res.status(404).json({ error: 'Event not found' });
       } 
@@ -94,20 +102,52 @@ async getEvent(req, res) {
     }
   },
 
-  
   //-------MODIFIER UN EVENEMENT -------------------------------------------------------------------------------------------------//
 
   async updateEvent(req, res) {
     
     try {
     
-      const validatedData = eventSchema.parse(req.body);
-      const event = await Event.findByPk(req.params.id);
-    
+      //const validatedData = eventSchema.parse(updatedEvent);
+
+      const event = await Event.findByPk(req.params.id, {
+        include: [{
+          association: 'host',
+        }],
+      });
+      
       if(!event) {
         return res.status(404).json({ error: 'Event not found' });
       }
 
+      if( event.host.id !== req.user.id) {
+        return res.status(404).json({ error: 'User has no permission to edit this event' });       
+      }
+
+      const locationGeoJSON = {
+        type: "Point",
+        coordinates: [req.body.location[1], req.body.location[0]] // Inversez les coordonnées pour respecter le format [longitude, latitude]
+      };
+
+      const updatedEvent = {
+        title: req.body.title,
+        description: req.body.description,
+        start_date: req.body.start_date,
+        finish_date: req.body.finish_date,
+        start_hour: req.body.start_hour,
+        address: req.body.address,
+        location: JSON.stringify(locationGeoJSON), // Convertissez l'objet GeoJSON en chaîne
+        privacy_type: req.body.privacy_type,
+        picture: req.body.picture,
+        max_attendee: req.body.max_attendee,
+        status: req.body.status,
+        pmr_access: req.body.pmr_access,
+        zip_code_city: req.body.zip_code_city,
+      };
+      
+      const validatedData = eventSchema.parse(updatedEvent);
+      
+      
       await event.update(validatedData);
     
       res.status(200).json(event);
