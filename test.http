@@ -25,13 +25,14 @@ POST {{endpoint}}/login
 Content-Type: application/json
 
 {
-  "email": "florent.desallangre@oclock.school",
+  "email": "plantiernoe50@gmail.com",
   "password": "password321"
 }
 
 ### Utilisation du token pour accéder à la route protégée de son profil 
 GET {{endpoint}}/user/me
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNjg3MzYxLCJleHAiOjE3MjA2OTA5NjF9.wcoPbJHA4oiR_3M07IiP8DuMDv-Pmf3RdBKeR07bzKs
+
 ### Utilisation du token pour accéder à la route update du profil protégé
 patch {{endpoint}}/user/me
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNjMzMzkzLCJleHAiOjE3MjA2MzY5OTN9.yTuI935hjy_y3Qd-x3-gJEktn9yI60jL0ubLWHAVKHs
@@ -130,43 +131,39 @@ Content-Type: application/json
 //----participation-----------------------------------------------
 
 ### l'utilisateur demande à participer à un event
-POST  {{endpoint}}/event/3/participate
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNjkxNjU5LCJleHAiOjE3MjA2OTUyNTl9.boPxnAFjZnEmv4Q8rDoBnUG9ucEQ32zRuNQRb5hFPes
+POST  {{endpoint}}/event/5/participate
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzIwNjk4OTQxLCJleHAiOjE3MjA3MDI1NDF9.175c47oqAClJ3C4ilnGtBPIVo0sUvpsDUhVTIGtnMIc
 
-{
-  "user_id": 1
-}
 
 ### l'utilisateur (hôte) accepte une demande de participation
-PATCH  {{endpoint}}/event/3/participate/accept
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzIwNjkxNDIzLCJleHAiOjE3MjA2OTUwMjN9.-caHXlsT27EjfPpgDsLUtjV_KBkwktVsBbpr9_zfuSw
+PATCH  {{endpoint}}/event/5/participate/accept
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNzAwNjIzLCJleHAiOjE3MjA3MDQyMjN9.KcL73h5W0RYZUiKEgPAir83_4rhP_0DdN7pfBQerWoo
 Content-Type: application/json
 
 {
-  "user_id": 1
+  "id": 6
 }
 
 ### annuler sa participation à un évènement 
-DELETE  {{endpoint}}/event/3/participate/cancel
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNjkxNjU5LCJleHAiOjE3MjA2OTUyNTl9.boPxnAFjZnEmv4Q8rDoBnUG9ucEQ32zRuNQRb5hFPes
+DELETE  {{endpoint}}/event/5/participate/cancel
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzIwNzA0NzgwLCJleHAiOjE3MjA3MDgzODB9.-hMYIJ0M_zHR4ilHwx2TQdYsXdEmLsqYMd6VNPN2yrw
+
+
+### l'utilisateur (hôte) accède aux participants de son event (dont demandes en attente)
+GET {{endpoint}}/event/4/participate/all
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzIwNzA1MjEyLCJleHAiOjE3MjA3MDg4MTJ9.xXwO7ldAybTv29M0LkPE7WE97U1-2YKNRyzwyTO16PQ
 Content-Type: application/json
 
-
-### l'utilisateur (hôte) accède aux participants de son event
-GET {{endpoint}}/event/3/participate/all
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzIwNjkxNDIzLCJleHAiOjE3MjA2OTUwMjN9.-caHXlsT27EjfPpgDsLUtjV_KBkwktVsBbpr9_zfuSw
-Content-Type: application/json
-
-### l'utilisateur (hôte) refuse une demande de participation
+### log Noé
 POST {{endpoint}}/login
 Content-Type: application/json
 
 {
-  "email": "plantiernoe50@gmail.com",
+  "email": "plantierlea50@gmail.com",
   "password": "password321"
 }
 
-### l'utilisateur (hôte) refuse une demande de participation
+### log Florent
 POST {{endpoint}}/login
 Content-Type: application/json
 

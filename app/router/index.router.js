@@ -30,9 +30,9 @@ router.delete('/event/:id', authenticateToken, eventController.deleteEvent); //s
 // Participation
 
 router.post('/event/:id/participate', authenticateToken, participationController.approvalRequest); //l'utilisateur demande à participer à un évènement
-router.post('/event/:id/participate/accept', authenticateToken, participationController.hostApproval); //l'hôte confirme une participation à un évènement
+router.patch('/event/:id/participate/accept', authenticateToken, participationController.hostApproval); //l'hôte confirme une participation à un évènement
 router.delete('/event/:id/participate/cancel', authenticateToken, participationController.cancelParticipation); //annuler sa participation à un évènement
-router.get('/event/:id/participate/all', authenticateToken, participationController.listParticipation); //liste des participants
+router.get('/event/:id/participate/all', authenticateToken, participationController.listAllParticipation); //liste des participants
 
 
 

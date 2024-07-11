@@ -22,7 +22,7 @@ export default {
   
       const hashedPassword = await bcrypt.hash(password, 10);
   
-      const user = User.create({  ...validatedData, password: hashedPassword, password_confirmation: hashedPassword });
+      const user = await User.create({  ...validatedData, password: hashedPassword, password_confirmation: hashedPassword });
       
       res.status(201).json(user);
     } catch (error) {
