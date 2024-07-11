@@ -27,6 +27,16 @@ Participation.belongsTo(Event, {
   as: 'event'
 });
 
-//export default { User , Event , Participation}
+//Un utilisateur à plusieurs events
+User.hasMany(Event, {
+  foreignKey: 'user_id',
+  as: 'events'
+});
+
+//Un event appartient à un utilisateur
+Event.belongsTo(User, {
+  foreignKey: 'user_id',
+  as: 'host'
+});
 
 export { Event, Participation, User };

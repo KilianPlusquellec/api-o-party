@@ -22,7 +22,7 @@ export default {
   
       const hashedPassword = await bcrypt.hash(password, 10);
   
-      const user = User.create({  ...validatedData, password: hashedPassword, password_confirmation: hashedPassword });
+      const user = await User.create({  ...validatedData, password: hashedPassword, password_confirmation: hashedPassword });
       
       res.status(201).json(user);
     } catch (error) {
@@ -58,7 +58,7 @@ export default {
       const token = jwt.sign({ id: user.id }, process.env.JWT_PRIVATE_KEY, { expiresIn: '1h' });
 
       // Renvoyer le token dans la réponse
-      res.status(200).json({ user, token });
+      res.status(200).header('Authorization', `Bearer ${token}`).json(user);
 
       //res.status(200).json(user);
     } catch (error) {
