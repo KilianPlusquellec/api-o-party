@@ -21,18 +21,18 @@ router.delete('/user/me', authenticateToken, userController.deleteMyUser); //sup
 
 // Événements
 
-router.post('/events', eventController.createEvent); //créer un évènement
-router.get('/events', eventController.getEvent); //accéder aux évènements
+router.post('/event', authenticateToken, eventController.createEvent); //créer un évènement
+router.get('/events', eventController.getEvent); //accéder aux évènements selon sa recherche
 router.get('/event/:id', eventController.getOneEvent); //accéder aux détails d'un évènement
 router.patch('/event/:id', authenticateToken, eventController.updateEvent); //modifier son évènement
-router.delete('/event/me', authenticateToken, eventController.deleteEvent); //supprimer son évènement
+router.delete('/event/:id', authenticateToken, eventController.deleteEvent); //supprimer son évènement
 
 // Participation
 
-router.post('/event/:id/participate', participationController.approvalRequest); //l'utilisateur demande à participer à un évènement
-router.post('/event/:id/participate', participationController.hostApproval); //l'hôte confirme une participation à un évènement
-router.delete('/event/:id/participate', participationController.cancelParticipation); //annuler sa participation à un évènement
-router.get('/event/:id/participate', participationController.listParticipation); //liste des participants
+router.post('/event/:id/participate', authenticateToken, participationController.approvalRequest); //l'utilisateur demande à participer à un évènement
+router.post('/event/:id/participate/accept', authenticateToken, participationController.hostApproval); //l'hôte confirme une participation à un évènement
+router.delete('/event/:id/participate/cancel', authenticateToken, participationController.cancelParticipation); //annuler sa participation à un évènement
+router.get('/event/:id/participate/all', authenticateToken, participationController.listParticipation); //liste des participants
 
 
 

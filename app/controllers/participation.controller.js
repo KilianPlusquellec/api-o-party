@@ -8,7 +8,7 @@ export default {
     try {
       const participationRequest = participationSchema.parse({
         ...req.body,
-        eventId: parseInt(req.params.id, 10),
+        event_id: parseInt(req.params.id, 10),
       });
 
       const participation = await Participation.create(participationRequest, {

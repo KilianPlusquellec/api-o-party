@@ -1,6 +1,6 @@
 import { Op } from 'sequelize';
 import sequelize from '../config/pg.client.js';
-import { Event } from '../models/index.model.js';
+import { Event, Participation } from '../models/index.model.js';
 import { eventSchema } from '../schemas/event.schema.js';
 
 export default {
@@ -10,7 +10,29 @@ export default {
   async createEvent(req, res) {
 
     try {
-      const validatedData = eventSchema.parse(req.body);
+      const locationGeoJSON = {
+        type: "Point",
+        coordinates: [req.body.location[1], req.body.location[0]] // Inversez les coordonnées pour respecter le format [longitude, latitude]
+      };
+
+      const createEvent = {
+        title: req.body.title,
+        description: req.body.description,
+        start_date: req.body.start_date,
+        finish_date: req.body.finish_date,
+        start_hour: req.body.start_hour,
+        address: req.body.address,
+        location: JSON.stringify(locationGeoJSON), // Convertissez l'objet GeoJSON en chaîne
+        privacy_type: req.body.privacy_type,
+        picture: req.body.picture,
+        max_attendee: req.body.max_attendee,
+        status: req.body.status,
+        pmr_access: req.body.pmr_access,
+        zip_code_city: req.body.zip_code_city,
+        user_id: req.body.user_id,
+      };
+
+      const validatedData = eventSchema.parse(createEvent);
 
       const event = await Event.create(validatedData);
       
@@ -24,7 +46,7 @@ export default {
 //-------TROUVER DES EVENEMENTS PRES DE CHEZ SOI----------------------------------------------------------------------------//
 
 async getEvent(req, res) {
-  const { latitude, longitude, searchfield, searchtext} = req.query;
+  const { latitude, longitude, radius: queryRadius, searchfield, searchtext} = req.query;
 
   if (latitude && longitude) {
     const lat = parseFloat(latitude);
@@ -33,8 +55,8 @@ async getEvent(req, res) {
     if (isNaN(lat) || isNaN(lon)) {
       return res.status(400).json({ error: 'Invalid latitude or longitude' });
     }
-
-    const radius = 50000; // 50 km in meters
+    // L'utilisateur modifie la distance souhaitée, sinon par défaut elle est à 50km
+    const radius = queryRadius ? parseFloat(queryRadius) : 50000 ;
 
     try {
       const eventsWithinRadiusQuery = `
@@ -163,13 +185,20 @@ async getEvent(req, res) {
   async deleteEvent(req, res) {
     
     try {
-    
-      const event = await Event.findByPk(req.params.id);
+
+      const eventId = req.params.id;
+      const event = await Event.findByPk(eventId);
 
       if (!event) {
         return res.status(404).json({ error: 'Event not found' });
       }
     
+      await Participation.destroy({
+        where: {
+          event_id: eventId,
+        },
+      });
+      
       await event.destroy();
     
       res.status(204).end();

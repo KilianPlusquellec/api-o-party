@@ -1,22 +1,7 @@
 @endpoint=http://localhost:{{$dotenv PORT}}
 
 
-//----testés et fonctionnel--------
-
-### Récupération de l'event avec l'id 1
-GET {{endpoint}}/event/1
-
-### Récupération de l'event avec l'id 6
-GET {{endpoint}}/event/6
-
-### Récupération du user avec l'id 1
-GET {{endpoint}}/user/1
-
-### Récupération du user avec l'id 9
-GET {{endpoint}}/user/6
-
-### Récupération de tous les events
-GET {{endpoint}}/events
+//----user-----------------------------------------------
 
 ### register un user
 POST {{endpoint}}/register
@@ -40,15 +25,14 @@ POST {{endpoint}}/login
 Content-Type: application/json
 
 {
-  "email": "plantiernoe50@gmail.com",
+  "email": "florent.desallangre@oclock.school",
   "password": "password321"
 }
 
-### Utilisation du token pour accéder à la route de son profil protégée
+### Utilisation du token pour accéder à la route protégée de son profil 
 GET {{endpoint}}/user/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNjMzMzkzLCJleHAiOjE3MjA2MzY5OTN9.yTuI935hjy_y3Qd-x3-gJEktn9yI60jL0ubLWHAVKHs
-
-### Utilisation du token pour accéder à la route modif du profil protégée
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNjg3MzYxLCJleHAiOjE3MjA2OTA5NjF9.wcoPbJHA4oiR_3M07IiP8DuMDv-Pmf3RdBKeR07bzKs
+### Utilisation du token pour accéder à la route update du profil protégé
 patch {{endpoint}}/user/me
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNjMzMzkzLCJleHAiOjE3MjA2MzY5OTN9.yTuI935hjy_y3Qd-x3-gJEktn9yI60jL0ubLWHAVKHs
 Content-Type: application/json
@@ -65,24 +49,59 @@ Content-Type: application/json
   "profil_picture": "https://example.com/profile.jpg"
 }
 
+### Récupération du user avec l'id 1
+GET {{endpoint}}/user/1
+
+### Récupération du user avec l'id 9 (non créé en BDD)
+GET {{endpoint}}/user/6
+
 
 ### delete son profil
 DELETE {{endpoint}}/user/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNjI5MTE5LCJleHAiOjE3MjA2MzI3MTl9.b4OQ3-8WlsiBXnex7H0ciMSd1k9azsjf7b3GkmpjHYQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNjg3MzYxLCJleHAiOjE3MjA2OTA5NjF9.wcoPbJHA4oiR_3M07IiP8DuMDv-Pmf3RdBKeR07bzKs
 
-### Test getEvent avec latitude et longitude
-GET {{endpoint}}/events?latitude=48.8549158&longitude=2.3128591
+
+//----event-----------------------------------------------
+
+### Créer un évènement 
+post {{endpoint}}/event
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNjg3MzYxLCJleHAiOjE3MjA2OTA5NjF9.wcoPbJHA4oiR_3M07IiP8DuMDv-Pmf3RdBKeR07bzKs
 Content-Type: application/json
 
+{
+  "title": "Soirée pyjama",
+  "description": "films et popocorns à volonté.",
+  "start_date": "2024-07-17",
+  "start_hour": "21:00:00",
+  "finish_date": "2024-07-17",
+  "address": "9, place des Faubourgs",
+  "location": [45.5603292, 4.8064673],
+  "privacy_type": false,
+  "picture": "https://avatars.githubusercontent.com/u/157673098?v=4",
+  "max_attendee": 20,
+  "status": false,
+  "pmr_access": true,
+  "zip_code_city": "69000 Lyon",
+  "user_id": 1
+  }
 
-### Test getEvent avec searchfield et searchtext
+### Récupération de l'event avec l'id 1
+GET {{endpoint}}/event/1
+
+### Récupération de l'event avec l'id 6 (non créé en BDD)
+GET {{endpoint}}/event/6
+
+### getEvent à une distance déterminée avec latitude et longitude
+GET {{endpoint}}/events?latitude=48.8549158&longitude=2.3128591&radius=5500000
+Content-Type: application/json
+
+### getEvent selon une recherche searchfield et searchtext
 GET {{endpoint}}/events?searchfield=title&searchtext=Concert%20Rock
 Content-Type: application/json
 
-
 ### Modifier son évènement
-patch {{endpoint}}/event/2
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNjMzMzkzLCJleHAiOjE3MjA2MzY5OTN9.yTuI935hjy_y3Qd-x3-gJEktn9yI60jL0ubLWHAVKHs
+patch {{endpoint}}/event/5
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNjg3MzYxLCJleHAiOjE3MjA2OTA5NjF9.wcoPbJHA4oiR_3M07IiP8DuMDv-Pmf3RdBKeR07bzKs
 Content-Type: application/json
 
 {
@@ -92,7 +111,7 @@ Content-Type: application/json
   "start_hour": "21:00:00",
   "finish_date": "2024-08-01",
   "address": "8, rue des Lilas",
-  "location": [45.5603292, 4.8064673],
+  "location": [4.8064673, 45.5603292],
   "privacy_type": false,
   "picture": "https://avatars.githubusercontent.com/u/157673098?v=4",
   "max_attendee": 120,
@@ -100,4 +119,58 @@ Content-Type: application/json
   "pmr_access": true,
   "zip_code_city": "69000 Lyon",
   "user_id": 1
+}
+
+### delete son event
+DELETE {{endpoint}}/event/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNjg3MzYxLCJleHAiOjE3MjA2OTA5NjF9.wcoPbJHA4oiR_3M07IiP8DuMDv-Pmf3RdBKeR07bzKs
+Content-Type: application/json
+
+
+//----participation-----------------------------------------------
+
+### l'utilisateur demande à participer à un event
+POST  {{endpoint}}/event/3/participate
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNjkxNjU5LCJleHAiOjE3MjA2OTUyNTl9.boPxnAFjZnEmv4Q8rDoBnUG9ucEQ32zRuNQRb5hFPes
+
+{
+  "user_id": 1
+}
+
+### l'utilisateur (hôte) accepte une demande de participation
+PATCH  {{endpoint}}/event/3/participate/accept
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzIwNjkxNDIzLCJleHAiOjE3MjA2OTUwMjN9.-caHXlsT27EjfPpgDsLUtjV_KBkwktVsBbpr9_zfuSw
+Content-Type: application/json
+
+{
+  "user_id": 1
+}
+
+### annuler sa participation à un évènement 
+DELETE  {{endpoint}}/event/3/participate/cancel
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNjkxNjU5LCJleHAiOjE3MjA2OTUyNTl9.boPxnAFjZnEmv4Q8rDoBnUG9ucEQ32zRuNQRb5hFPes
+Content-Type: application/json
+
+
+### l'utilisateur (hôte) accède aux participants de son event
+GET {{endpoint}}/event/3/participate/all
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzIwNjkxNDIzLCJleHAiOjE3MjA2OTUwMjN9.-caHXlsT27EjfPpgDsLUtjV_KBkwktVsBbpr9_zfuSw
+Content-Type: application/json
+
+### l'utilisateur (hôte) refuse une demande de participation
+POST {{endpoint}}/login
+Content-Type: application/json
+
+{
+  "email": "plantiernoe50@gmail.com",
+  "password": "password321"
+}
+
+### l'utilisateur (hôte) refuse une demande de participation
+POST {{endpoint}}/login
+Content-Type: application/json
+
+{
+  "email": "florent.desallangre@oclock.school",
+  "password": "password321"
 }

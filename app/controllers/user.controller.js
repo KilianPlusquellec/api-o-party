@@ -8,8 +8,14 @@ export default {
   async getMyUser(req, res) {
 
     try {
-    
-      const user = await User.findByPk(req.user.id);
+      const user = await User.findByPk(req.user.id, {
+        include: [{
+          association: 'events',
+          include: [{
+            association: 'host',
+          }],
+        }],
+      });
     
       if (!user) {
         return res.status(404).json({ error: 'User not found' });
@@ -26,8 +32,15 @@ export default {
   async getUser(req, res) {
     
     try {
-    
-      const user = await User.findByPk(req.params.id,);
+      // faire la meme chose que pour getMyUser mais avec un id en parametre
+      const user = await User.findByPk(req.params.id, {
+        include: [{
+          association: 'events',
+          include: [{
+            association: 'host',
+          }],
+        }],
+      });
     
       if (!user) {
         return res.status(404).json({ error: 'User not found' });
