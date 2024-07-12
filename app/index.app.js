@@ -1,6 +1,7 @@
 import cors from 'cors';
 import express from 'express';
 import router from './router/index.router.js';
+import docMiddleware from './libraries/doc.middleware.js';
 
 const app = express();
 
@@ -20,6 +21,8 @@ app.use(
       methods: "GET,PATCH,POST,DELETE",
   })
 );
+
+docMiddleware(app);
 
 app.use(router);
 
