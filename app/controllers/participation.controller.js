@@ -28,7 +28,7 @@ export default {
     });
 
     if (pendingParticipation) {
-      return res.status(400).json({ message: 'you\'ve already submitted a participation request' });
+      return res.status(401).json({ message: 'you\'ve already submitted a participation request' });
     }
       // On créé la demande de participation
       const participationRequest = await Participation.create({
@@ -37,7 +37,7 @@ export default {
         approval: false // par défaut, la demande n'est pas encore approuvée
       });
   
-      return res.status(201).json({ message: 'request for participation sent', participationRequest });
+      return res.status(201).json({ message: 'participation request sent', participationRequest });
     } catch (error) {
       res.status(400).json({ error });
     }

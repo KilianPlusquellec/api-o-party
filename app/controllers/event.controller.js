@@ -12,7 +12,7 @@ export default {
     try {
       const locationGeoJSON = {
         type: "Point",
-        coordinates: [req.body.location[1], req.body.location[0]] // Inversez les coordonnées pour respecter le format [longitude, latitude]
+        coordinates: [req.body.location[1], req.body.location[0]]
       };
 
       const createEvent = {
@@ -22,7 +22,7 @@ export default {
         finish_date: req.body.finish_date,
         start_hour: req.body.start_hour,
         address: req.body.address,
-        location: JSON.stringify(locationGeoJSON), // Convertissez l'objet GeoJSON en chaîne
+        location: JSON.stringify(locationGeoJSON), // Convertir l'objet GeoJSON en chaîne
         privacy_type: req.body.privacy_type,
         picture: req.body.picture,
         max_attendee: req.body.max_attendee,
@@ -148,7 +148,7 @@ async getEvent(req, res) {
 
       const locationGeoJSON = {
         type: "Point",
-        coordinates: [req.body.location[1], req.body.location[0]] // Inversez les coordonnées pour respecter le format [longitude, latitude]
+        coordinates: [req.body.location[1], req.body.location[0]] 
       };
 
       const updatedEvent = {
@@ -158,7 +158,7 @@ async getEvent(req, res) {
         finish_date: req.body.finish_date,
         start_hour: req.body.start_hour,
         address: req.body.address,
-        location: JSON.stringify(locationGeoJSON), // Convertissez l'objet GeoJSON en chaîne
+        location: JSON.stringify(locationGeoJSON), // Convertir l'objet GeoJSON en chaîne
         privacy_type: req.body.privacy_type,
         picture: req.body.picture,
         max_attendee: req.body.max_attendee,
