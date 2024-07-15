@@ -1,6 +1,7 @@
 import cors from 'cors';
 import express from 'express';
 import router from './router/index.router.js';
+import docMiddleware from './libraries/doc.middleware.js';
 
 const app = express();
 
@@ -17,9 +18,12 @@ app.use(
           'http://127.0.0.1:5174',
       ],
       credentials: true,
+      exposedHeaders: ['Authorization'],
       methods: "GET,PATCH,POST,DELETE",
   })
 );
+
+docMiddleware(app);
 
 app.use(router);
 
