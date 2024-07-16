@@ -31,8 +31,7 @@ Content-Type: application/json
 
 ### Utilisation du token pour accéder à la route protégée de son profil 
 GET {{endpoint}}/user/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNjg3MzYxLCJleHAiOjE3MjA2OTA5NjF9.wcoPbJHA4oiR_3M07IiP8DuMDv-Pmf3RdBKeR07bzKs
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzIxMDUxNDM0LCJleHAiOjE3MjEwNTUwMzR9.UcTi94G1z2ZZhyaaDK0dguSqlf7jX1wnHhC3XqKR1j8
 ### Utilisation du token pour accéder à la route update du profil protégé
 patch {{endpoint}}/user/me
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNjMzMzkzLCJleHAiOjE3MjA2MzY5OTN9.yTuI935hjy_y3Qd-x3-gJEktn9yI60jL0ubLWHAVKHs
@@ -101,8 +100,8 @@ GET {{endpoint}}/events?searchfield=title&searchtext=Concert%20Rock
 Content-Type: application/json
 
 ### Modifier son évènement
-patch {{endpoint}}/event/5
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNjg3MzYxLCJleHAiOjE3MjA2OTA5NjF9.wcoPbJHA4oiR_3M07IiP8DuMDv-Pmf3RdBKeR07bzKs
+patch {{endpoint}}/event/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIxMTM0NDI3LCJleHAiOjE3MjExMzgwMjd9.8K0I_q36UhOMJYKYMb6l6p03u3QV3Qkxhll_-M3SQ-c
 Content-Type: application/json
 
 {
@@ -131,8 +130,8 @@ Content-Type: application/json
 //----participation-----------------------------------------------
 
 ### l'utilisateur demande à participer à un event
-POST  {{endpoint}}/event/5/participate
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzIwNjk4OTQxLCJleHAiOjE3MjA3MDI1NDF9.175c47oqAClJ3C4ilnGtBPIVo0sUvpsDUhVTIGtnMIc
+POST  {{endpoint}}/event/1/participate
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIxMTM0NDI3LCJleHAiOjE3MjExMzgwMjd9.8K0I_q36UhOMJYKYMb6l6p03u3QV3Qkxhll_-M3SQ-c
 
 
 ### l'utilisateur (hôte) accepte une demande de participation
@@ -145,13 +144,13 @@ Content-Type: application/json
 }
 
 ### annuler sa participation à un évènement 
-DELETE  {{endpoint}}/event/5/participate/cancel
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzIwNzA0NzgwLCJleHAiOjE3MjA3MDgzODB9.-hMYIJ0M_zHR4ilHwx2TQdYsXdEmLsqYMd6VNPN2yrw
+DELETE  {{endpoint}}/event/1/participate/cancel
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzIxMDUxNDM0LCJleHAiOjE3MjEwNTUwMzR9.UcTi94G1z2ZZhyaaDK0dguSqlf7jX1wnHhC3XqKR1j8
 
 
 ### l'utilisateur (hôte) accède aux participants de son event (dont demandes en attente)
-GET {{endpoint}}/event/4/participate/all
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzIwNzA1MjEyLCJleHAiOjE3MjA3MDg4MTJ9.xXwO7ldAybTv29M0LkPE7WE97U1-2YKNRyzwyTO16PQ
+GET {{endpoint}}/event/2/participate/all
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNjg3MzYxLCJleHAiOjE3MjA2OTA5NjF9.wcoPbJHA4oiR_3M07IiP8DuMDv-Pmf3RdBKeR07bzKs
 Content-Type: application/json
 
 ### log Noé
