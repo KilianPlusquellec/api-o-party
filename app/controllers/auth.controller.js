@@ -26,12 +26,7 @@ export default {
       
       res.status(201).json(user);
     } catch (error) {
-      res.status(400).json({ error: {
-        name: error.name,
-        message: error.message,
-        stack: error.stack,
-        details: error.details
-      }  });
+      res.status(400).json({ error: 'Invalid input'});
     }
   },
 //-------LOGIN----------------------------------------------------
@@ -62,7 +57,7 @@ export default {
 
       //res.status(200).json(user);
     } catch (error) {
-      res.status(400).json({ error });
+      res.status(400).json({ error: 'Invalid input' });
     }
   },
 };

@@ -8,7 +8,8 @@ export default {
 //-------CREER UN EVENEMENT -------------------------------------------------------------------------------------------------//
 
   async createEvent(req, res) {
-
+    console.log('arrive dans createEvent');
+    console.log(req.body);
     try {
       const locationGeoJSON = {
         type: "Point",
@@ -33,13 +34,14 @@ export default {
       };
 
       const validatedData = eventSchema.parse(createEvent);
+      console.log(validatedData);
 
       const event = await Event.create(validatedData);
       
       res.status(201).json(event);
     
     } catch (error) {
-      res.status(400).json({ error });
+      res.status(400).json({ error});
     }
   },
 

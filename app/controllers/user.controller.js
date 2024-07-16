@@ -16,15 +16,11 @@ export default {
           }],
         }],
       });
-    
-      if (!user) {
-        return res.status(404).json({ error: 'User not found' });
-      }
-      
+        
       res.status(200).json(user);
           
     } catch (error) {
-      res.status(400).json({ error });
+      res.status(401).json({ error: 'Unauthorized'});
     }
   },
 
@@ -32,7 +28,7 @@ export default {
   async getUser(req, res) {
     
     try {
-      // faire la meme chose que pour getMyUser mais avec un id en parametre
+    
       const user = await User.findByPk(req.params.id, {
         include: [{
           association: 'events',
