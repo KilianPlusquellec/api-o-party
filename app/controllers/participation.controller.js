@@ -28,7 +28,7 @@ export default {
     });
 
     if (pendingParticipation) {
-      return res.status(401).json({ message: 'you\'ve already submitted a participation request' });
+      return res.status(400).json({ message: 'you\'ve already submitted a participation request' });
     }
       // On créé la demande de participation
       const participationRequest = await Participation.create({
@@ -39,7 +39,7 @@ export default {
   
       return res.status(201).json({ message: 'participation request sent', participationRequest });
     } catch (error) {
-      res.status(400).json({ error });
+      res.status(400).json({ error: 'Invalid input' });
     }
   },
   
@@ -105,7 +105,7 @@ async  hostApproval(req, res) {
 
     return res.status(200).json({ message: 'Participation approved' });
   } catch (error) {
-    res.status(400).json({ error });
+    res.status(400).json({ error: 'Invalid request' });
   
   }
 },
@@ -131,7 +131,7 @@ async  hostApproval(req, res) {
       res.status(204).json({message: 'Participation canceled'});
 
     } catch (error) {
-      res.status(400).json({ error });
+      res.status(400).json({ error: 'Invalid request' });
     }
   },
 
@@ -157,13 +157,18 @@ async  hostApproval(req, res) {
         where: {
           event_id: req.params.id,
         },
-        include: ['user'],
+        include: [
+          {
+            association: 'user',
+            attributes: { exclude: [ 'password', 'password_confirmation' ] }
+          }
+        ],
         });
 
       res.status(200).json(participations);
 
     } catch (error) {
-      res.status(400).json({ error });
+      res.status(400).json({ error : 'request error' });
     }
   },
 }

@@ -100,8 +100,8 @@ GET {{endpoint}}/events?searchfield=title&searchtext=Concert%20Rock
 Content-Type: application/json
 
 ### Modifier son évènement
-patch {{endpoint}}/event/5
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNjg3MzYxLCJleHAiOjE3MjA2OTA5NjF9.wcoPbJHA4oiR_3M07IiP8DuMDv-Pmf3RdBKeR07bzKs
+patch {{endpoint}}/event/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIxMTM0NDI3LCJleHAiOjE3MjExMzgwMjd9.8K0I_q36UhOMJYKYMb6l6p03u3QV3Qkxhll_-M3SQ-c
 Content-Type: application/json
 
 {
@@ -131,7 +131,7 @@ Content-Type: application/json
 
 ### l'utilisateur demande à participer à un event
 POST  {{endpoint}}/event/1/participate
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzIxMDUxNDM0LCJleHAiOjE3MjEwNTUwMzR9.UcTi94G1z2ZZhyaaDK0dguSqlf7jX1wnHhC3XqKR1j8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIxMTM0NDI3LCJleHAiOjE3MjExMzgwMjd9.8K0I_q36UhOMJYKYMb6l6p03u3QV3Qkxhll_-M3SQ-c
 
 
 ### l'utilisateur (hôte) accepte une demande de participation
@@ -149,8 +149,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxN
 
 
 ### l'utilisateur (hôte) accède aux participants de son event (dont demandes en attente)
-GET {{endpoint}}/event/4/participate/all
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzIwNzA1MjEyLCJleHAiOjE3MjA3MDg4MTJ9.xXwO7ldAybTv29M0LkPE7WE97U1-2YKNRyzwyTO16PQ
+GET {{endpoint}}/event/2/participate/all
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNjg3MzYxLCJleHAiOjE3MjA2OTA5NjF9.wcoPbJHA4oiR_3M07IiP8DuMDv-Pmf3RdBKeR07bzKs
 Content-Type: application/json
 
 ### log Noé

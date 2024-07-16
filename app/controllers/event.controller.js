@@ -8,9 +8,8 @@ export default {
 //-------CREER UN EVENEMENT -------------------------------------------------------------------------------------------------//
 
   async createEvent(req, res) {
-    console.log('arrive dans createEvent');
-    console.log(req.body);
-    try {
+    
+       try {
       const locationGeoJSON = {
         type: "Point",
         coordinates: [req.body.location[1], req.body.location[0]]
@@ -34,14 +33,13 @@ export default {
       };
 
       const validatedData = eventSchema.parse(createEvent);
-      console.log(validatedData);
-
+      
       const event = await Event.create(validatedData);
       
       res.status(201).json(event);
     
     } catch (error) {
-      res.status(400).json({ error});
+      res.status(400).json({ error : 'Invalid input'});
     }
   },
 
@@ -79,7 +77,7 @@ async getEvent(req, res) {
       const eventsWithinRadius = await sequelize.query(eventsWithinRadiusQuery, { type: sequelize.QueryTypes.SELECT });
       return res.status(200).json(eventsWithinRadius);
     } catch (error) {
-      return res.status(400).json({ error: error.message });
+      return res.status(400).json({ error: 'Invalid distance research' });
     }
   } else if (searchfield && searchtext) {
     try {
@@ -92,10 +90,10 @@ async getEvent(req, res) {
       });
       return res.status(200).json(events);
     } catch (error) {
-      return res.status(400).json({ error: error.message });
+      return res.status(400).json({ error: 'Invalid research' });
     }
   } else {
-    return res.status(400).json({ error: 'Search field and text are required' });
+    return res.status(400).json({ error: 'Invalid input' });
   }
 },
   
@@ -113,6 +111,7 @@ async getEvent(req, res) {
       const event = await Event.findByPk(eventId, {
         include: [{
           association: 'host',
+          attributes: { exclude: ['password', 'password_confirmation'] }
         }],
       });
     
@@ -122,7 +121,7 @@ async getEvent(req, res) {
       
       return res.status(200).json(event);
     } catch (error) {
-      res.status(400).json({ error });
+      res.status(400).json({ error : 'Invalid input'});
     }
   },
 
@@ -137,6 +136,7 @@ async getEvent(req, res) {
       const event = await Event.findByPk(req.params.id, {
         include: [{
           association: 'host',
+          attributes: { exclude: ['password', 'password_confirmation'] }
         }],
       });
       
@@ -178,7 +178,7 @@ async getEvent(req, res) {
       res.status(200).json(event);
     
     } catch (error) {
-      res.status(400).json({ error });
+      res.status(400).json({ error: 'Invalid input' });
     }
   },
 
@@ -206,7 +206,7 @@ async getEvent(req, res) {
       res.status(204).end();
     
     } catch (error) {
-      res.status(400).json({ error });
+      res.status(400).json({ error: 'Invalid request' });
     }
   },
 };

@@ -9,7 +9,7 @@ export default {
   
   async registerUser(req, res) {
 
-    try {
+    try { 
       const {
         password,
         password_confirmation,
@@ -26,7 +26,7 @@ export default {
       
       res.status(201).json(user);
     } catch (error) {
-      res.status(400).json({ error: 'Invalid input'});
+      res.status(400).json({ error: 'Invalid input'}); 
     }
   },
 //-------LOGIN----------------------------------------------------
@@ -52,8 +52,15 @@ export default {
         // Générer un token pour l'utilisateur connecté
       const token = jwt.sign({ id: user.id }, process.env.JWT_PRIVATE_KEY, { expiresIn: '1h' });
 
+      // Supprimer le mot de passe de l'objet user
+      const userWithoutPassword = {
+        ...user.toJSON(),
+        password: undefined,
+        password_confirmation: undefined
+      };
+  
       // Renvoyer le token dans la réponse
-      res.status(200).header('Authorization', `Bearer ${token}`).json(user);
+      res.status(200).header('Authorization', `Bearer ${token}`).json(userWithoutPassword);
 
       //res.status(200).json(user);
     } catch (error) {

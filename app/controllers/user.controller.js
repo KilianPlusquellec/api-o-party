@@ -13,6 +13,7 @@ export default {
           association: 'events',
           include: [{
             association: 'host',
+            attributes: { exclude: ['password', 'password_confirmation'] }
           }],
         }],
       });
@@ -34,6 +35,7 @@ export default {
           association: 'events',
           include: [{
             association: 'host',
+            attributes: { exclude: ['password', 'password_confirmation'] }
           }],
         }],
       });
@@ -45,7 +47,7 @@ export default {
       res.status(200).json(user);
 
     } catch (error) {
-      res.status(400).json({ error });
+      res.status(400).json({ error : 'error' });
     }
   },
  //------MODIFIER SON PROFIL----------------------------------------------------//
@@ -81,7 +83,7 @@ export default {
       res.status(200).json(user);
     
     } catch (error) {
-      res.status(400).json({ error });
+      res.status(401).json({  error: 'Unauthorized' });
     }
   },
   
@@ -98,7 +100,7 @@ export default {
       res.status(204).end();
       
     } catch (error) {
-      res.status(400).json({ error });
+      res.status(401).json({ error: 'Unauthorized' });
     }
   }
 };

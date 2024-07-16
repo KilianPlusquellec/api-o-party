@@ -3,8 +3,6 @@ import jwt from 'jsonwebtoken';
 function authenticateToken(req, res, next) {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
-  console.log('token',token);
-  console.log('authHeader',authHeader);
   if (token == null) return res.sendStatus(401); // si il n'y a pas de token, renvoyer une erreur 401
 
   jwt.verify(token, process.env.JWT_PRIVATE_KEY, (err, user) => {
