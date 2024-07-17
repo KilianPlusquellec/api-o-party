@@ -150,8 +150,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxN
 
 ### l'utilisateur (hôte) accède aux participants de son event (dont demandes en attente)
 GET {{endpoint}}/event/2/participate/all
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNjg3MzYxLCJleHAiOjE3MjA2OTA5NjF9.wcoPbJHA4oiR_3M07IiP8DuMDv-Pmf3RdBKeR07bzKs
-Content-Type: application/json
+#Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNjg3MzYxLCJleHAiOjE3MjA2OTA5NjF9.wcoPbJHA4oiR_3M07IiP8DuMDv-Pmf3RdBKeR07bzKs
+#Content-Type: application/json
 
 ### log Noé
 POST {{endpoint}}/login

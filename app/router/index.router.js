@@ -643,10 +643,9 @@ router.delete('/event/:id/participate/cancel', authenticateToken, participationC
 /**
  * GET /event/:id/participate/all
  * @summary participants list
- * @description the host can access to the participants list (approuved or not)
+ * @description the users can access to an event participants list (approuved or not)
  * @tags participation
- * @security Bearer
- * @param {string} id.path.required - event id
+  * @param {string} id.path.required - event id
  * @return {object} 200 - participant list - application/json
  * @example response - 200 - participant list
  * [
@@ -678,23 +677,13 @@ router.delete('/event/:id/participate/cancel', authenticateToken, participationC
  * {
  * "error": "Event not found"
  * }
- * @return {string} 403 - Access denied - application/json
- * @example response - 403 - Access denied
- * {
- * "error": "Access denied, this his not your event"
- * }
  * @return {string} 400 - request error - application/json
  * @example response - 400 - request error
  * {
  * "error": "request error"
  * }
- * @returns {string} 401 - Unauthorized, Invalid or missing token - application/json
- * @example response - 401 - Unauthorized, Invalid or missing token
- * {
- * "error": "Unauthorized"
- * }
  */
-router.get('/event/:id/participate/all', authenticateToken, participationController.listAllParticipation); //liste des participants
+router.get('/event/:id/participate/all', participationController.listAllParticipation); //liste des participants
 
 
 

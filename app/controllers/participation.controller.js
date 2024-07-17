@@ -141,7 +141,7 @@ async  hostApproval(req, res) {
     try {
 
       const { id } = req.params; 
-      const userId = req.user.id; 
+      //const userId = req.user.id; 
 
       // On vérifie si l'évènement existe
       const event = await Event.findByPk(id);
@@ -149,10 +149,10 @@ async  hostApproval(req, res) {
         return res.status(404).json({ message: 'Event not found' });
       }
 
-      // On vérifie si l'utilisateur est l'hôte de l'évènement
-      if (event.user_id !== userId) {
-        return res.status(403).json({ message: 'Access denied, this his not your event' });
-      }
+     //pour n'autoriser que l'hôte de l'évènement à voir la liste des participants
+      // if (event.user_id !== userId) {
+      //   return res.status(403).json({ message: 'Access denied, this his not your event' });
+      // } 
       const participations = await Participation.findAll({
         where: {
           event_id: req.params.id,
