@@ -18,7 +18,14 @@ export default {
         }],
       });
         
-      res.status(200).json(user);
+      // Supprimer le mot de passe de l'objet user
+      const userWithoutPassword = {
+        ...user.toJSON(),
+        password: undefined,
+        password_confirmation: undefined
+      };
+
+      res.status(200).json(userWithoutPassword);
           
     } catch (error) {
       res.status(401).json({ error: 'Unauthorized'});
@@ -44,7 +51,14 @@ export default {
         return res.status(404).json({ error: 'User not found' });
       }
     
-      res.status(200).json(user);
+      // Supprimer le mot de passe de l'objet user
+      const userWithoutPassword = {
+        ...user.toJSON(),
+        password: undefined,
+        password_confirmation: undefined
+      };
+
+      res.status(200).json(userWithoutPassword);
 
     } catch (error) {
       res.status(400).json({ error : 'error' });
