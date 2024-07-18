@@ -31,23 +31,29 @@ Content-Type: application/json
 
 ### Utilisation du token pour accéder à la route protégée de son profil 
 GET {{endpoint}}/user/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzIxMDUxNDM0LCJleHAiOjE3MjEwNTUwMzR9.UcTi94G1z2ZZhyaaDK0dguSqlf7jX1wnHhC3XqKR1j8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzIxMjkzMTU0LCJleHAiOjE3MjEyOTY3NTR9.664UWr_BmjA1VCv-w4YVLm_oZKi5oqCefubeecbh0FE
 ### Utilisation du token pour accéder à la route update du profil protégé
 patch {{endpoint}}/user/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNjMzMzkzLCJleHAiOjE3MjA2MzY5OTN9.yTuI935hjy_y3Qd-x3-gJEktn9yI60jL0ubLWHAVKHs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzIxMzAzMzAxLCJleHAiOjE3MjEzMDY5MDF9.yI3Or774pWnR1Ve3JkLHj1bg0Diu_4B0c1XNrPpy3Vg
 Content-Type: application/json
 
 {
-  "first_name": "John",
-  "last_name": "Doe",
-  "birth_date": "1990-01-01",
-  "address": "123 Main St",
-  "email": "john.doe@example.com",
-  "password": "password321",
-  "password_confirmation": "password321",
-  "about": "Hello, I'm John Doe and I'm a developer",
   "profil_picture": "https://example.com/profile.jpg"
 }
+
+# {
+#   "first_name": "John",
+#   "last_name": "Doe",
+#   "birth_date": "1990-01-01",
+#   "address": "123 Main St",
+#   "email": "john.doe@example.com",
+#   "password": "password321",
+#   "password_confirmation": "password321",
+#   "about": "Hello, I'm John Doe and I'm a developer",
+#   "profil_picture": "https://example.com/profile.jpg"
+# }
+
+
 
 ### Récupération du user avec l'id 1
 GET {{endpoint}}/user/1
@@ -58,7 +64,7 @@ GET {{endpoint}}/user/6
 
 ### delete son profil
 DELETE {{endpoint}}/user/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNjg3MzYxLCJleHAiOjE3MjA2OTA5NjF9.wcoPbJHA4oiR_3M07IiP8DuMDv-Pmf3RdBKeR07bzKs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzIxMjUzNTk3LCJleHAiOjE3MjEyNTcxOTd9.rbtDse9ZQmuNBmhC0kdv2o0f3A9P7UrJdJIbgOldyuw
 
 
 //----event-----------------------------------------------
@@ -100,26 +106,17 @@ GET {{endpoint}}/events?searchfield=title&searchtext=Concert%20Rock
 Content-Type: application/json
 
 ### Modifier son évènement
-patch {{endpoint}}/event/2
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIxMTM0NDI3LCJleHAiOjE3MjExMzgwMjd9.8K0I_q36UhOMJYKYMb6l6p03u3QV3Qkxhll_-M3SQ-c
+patch {{endpoint}}/event/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzIxMzA2OTQ2LCJleHAiOjE3MjEzMTA1NDZ9.C0kNUa28mucxDFVDs_4bhda3pKkHh5gljmkHQ37yroM
 Content-Type: application/json
 
+
 {
-  "title": "Soirée électro",
-  "description": "découvrez le meilleur DJ de Lyon.",
-  "start_date": "2024-08-01",
-  "start_hour": "21:00:00",
-  "finish_date": "2024-08-01",
-  "address": "8, rue des Lilas",
-  "location": [4.8064673, 45.5603292],
-  "privacy_type": false,
-  "picture": "https://avatars.githubusercontent.com/u/157673098?v=4",
-  "max_attendee": 120,
-  "status": false,
-  "pmr_access": true,
-  "zip_code_city": "69000 Lyon",
-  "user_id": 1
+  "title": "Gloire au FOF",
+  "user_id": 2
 }
+
+
 
 ### delete son event
 DELETE {{endpoint}}/event/2
@@ -150,8 +147,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxN
 
 ### l'utilisateur (hôte) accède aux participants de son event (dont demandes en attente)
 GET {{endpoint}}/event/2/participate/all
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNjg3MzYxLCJleHAiOjE3MjA2OTA5NjF9.wcoPbJHA4oiR_3M07IiP8DuMDv-Pmf3RdBKeR07bzKs
-Content-Type: application/json
+#Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNjg3MzYxLCJleHAiOjE3MjA2OTA5NjF9.wcoPbJHA4oiR_3M07IiP8DuMDv-Pmf3RdBKeR07bzKs
+#Content-Type: application/json
 
 ### log Noé
 POST {{endpoint}}/login
@@ -159,7 +156,7 @@ Content-Type: application/json
 
 {
   "email": "plantierlea50@gmail.com",
-  "password": "password321"
+  "password": "ppassword321"
 }
 
 ### log Florent
