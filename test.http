@@ -31,23 +31,30 @@ Content-Type: application/json
 
 ### Utilisation du token pour accéder à la route protégée de son profil 
 GET {{endpoint}}/user/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzIxMDUxNDM0LCJleHAiOjE3MjEwNTUwMzR9.UcTi94G1z2ZZhyaaDK0dguSqlf7jX1wnHhC3XqKR1j8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzIxMjkzMTU0LCJleHAiOjE3MjEyOTY3NTR9.664UWr_BmjA1VCv-w4YVLm_oZKi5oqCefubeecbh0FE
 ### Utilisation du token pour accéder à la route update du profil protégé
 patch {{endpoint}}/user/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNjMzMzkzLCJleHAiOjE3MjA2MzY5OTN9.yTuI935hjy_y3Qd-x3-gJEktn9yI60jL0ubLWHAVKHs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzIxMjkzMTU0LCJleHAiOjE3MjEyOTY3NTR9.664UWr_BmjA1VCv-w4YVLm_oZKi5oqCefubeecbh0FE
 Content-Type: application/json
 
 {
-  "first_name": "John",
-  "last_name": "Doe",
-  "birth_date": "1990-01-01",
-  "address": "123 Main St",
-  "email": "john.doe@example.com",
-  "password": "password321",
-  "password_confirmation": "password321",
-  "about": "Hello, I'm John Doe and I'm a developer",
-  "profil_picture": "https://example.com/profile.jpg"
+  "password": "ppassword321",
+  "password_confirmation": "ppassword321"
 }
+
+# {
+#   "first_name": "John",
+#   "last_name": "Doe",
+#   "birth_date": "1990-01-01",
+#   "address": "123 Main St",
+#   "email": "john.doe@example.com",
+#   "password": "password321",
+#   "password_confirmation": "password321",
+#   "about": "Hello, I'm John Doe and I'm a developer",
+#   "profil_picture": "https://example.com/profile.jpg"
+# }
+
+
 
 ### Récupération du user avec l'id 1
 GET {{endpoint}}/user/1
@@ -58,7 +65,7 @@ GET {{endpoint}}/user/6
 
 ### delete son profil
 DELETE {{endpoint}}/user/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIwNjg3MzYxLCJleHAiOjE3MjA2OTA5NjF9.wcoPbJHA4oiR_3M07IiP8DuMDv-Pmf3RdBKeR07bzKs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzIxMjUzNTk3LCJleHAiOjE3MjEyNTcxOTd9.rbtDse9ZQmuNBmhC0kdv2o0f3A9P7UrJdJIbgOldyuw
 
 
 //----event-----------------------------------------------

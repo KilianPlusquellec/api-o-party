@@ -282,6 +282,11 @@ router.get('/user/:id', authenticateToken, userController.getUser); //acc√©der √
  * {
  *  "error": "Passwords do not match"
  * }
+ * @returns {string} 404 - error response - application/json
+ * @example response - 404 - Invalid user ID
+ * {
+ * "error": "User not found"
+ * }
  */
 router.patch('/user/me', authenticateToken, userController.updateUser); //modifier son profil
 
