@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const updateSchema = z.object({
+export const updateUserSchema = z.object({
   first_name: z.string().min(1).max(50).optional(),
   last_name: z.string().min(1).max(50).optional(),
   birth_date: z.string().transform((value) => new Date(value)).refine(date => !isNaN(date.valueOf()), {

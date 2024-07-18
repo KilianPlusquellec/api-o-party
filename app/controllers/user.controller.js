@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import { User } from '../models/index.model.js';
-import { updateSchema } from '../schemas/user.schema.js';
+import { updateUserSchema } from '../schemas/user.schema.js';
 
  //------ACCEDER A SON PROFIL----------------------------------------------------//
 
@@ -94,7 +94,7 @@ export default {
       if (encryptedPassword) updatedFields.password = encryptedPassword;
   
       // Valider les données mises à jour
-      const validatedData = updateSchema.parse(updatedFields);
+      const validatedData = updateUserSchema.parse(updatedFields);
   
       // Mettre à jour l'utilisateur
       await user.update(validatedData);

@@ -34,12 +34,11 @@ GET {{endpoint}}/user/me
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzIxMjkzMTU0LCJleHAiOjE3MjEyOTY3NTR9.664UWr_BmjA1VCv-w4YVLm_oZKi5oqCefubeecbh0FE
 ### Utilisation du token pour accéder à la route update du profil protégé
 patch {{endpoint}}/user/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzIxMjkzMTU0LCJleHAiOjE3MjEyOTY3NTR9.664UWr_BmjA1VCv-w4YVLm_oZKi5oqCefubeecbh0FE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzIxMzAzMzAxLCJleHAiOjE3MjEzMDY5MDF9.yI3Or774pWnR1Ve3JkLHj1bg0Diu_4B0c1XNrPpy3Vg
 Content-Type: application/json
 
 {
-  "password": "ppassword321",
-  "password_confirmation": "ppassword321"
+  "profil_picture": "https://example.com/profile.jpg"
 }
 
 # {
@@ -107,26 +106,17 @@ GET {{endpoint}}/events?searchfield=title&searchtext=Concert%20Rock
 Content-Type: application/json
 
 ### Modifier son évènement
-patch {{endpoint}}/event/2
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzIxMTM0NDI3LCJleHAiOjE3MjExMzgwMjd9.8K0I_q36UhOMJYKYMb6l6p03u3QV3Qkxhll_-M3SQ-c
+patch {{endpoint}}/event/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzIxMzA2OTQ2LCJleHAiOjE3MjEzMTA1NDZ9.C0kNUa28mucxDFVDs_4bhda3pKkHh5gljmkHQ37yroM
 Content-Type: application/json
 
+
 {
-  "title": "Soirée électro",
-  "description": "découvrez le meilleur DJ de Lyon.",
-  "start_date": "2024-08-01",
-  "start_hour": "21:00:00",
-  "finish_date": "2024-08-01",
-  "address": "8, rue des Lilas",
-  "location": [4.8064673, 45.5603292],
-  "privacy_type": false,
-  "picture": "https://avatars.githubusercontent.com/u/157673098?v=4",
-  "max_attendee": 120,
-  "status": false,
-  "pmr_access": true,
-  "zip_code_city": "69000 Lyon",
-  "user_id": 1
+  "title": "Gloire au FOF",
+  "user_id": 2
 }
+
+
 
 ### delete son event
 DELETE {{endpoint}}/event/2
@@ -166,7 +156,7 @@ Content-Type: application/json
 
 {
   "email": "plantierlea50@gmail.com",
-  "password": "password321"
+  "password": "ppassword321"
 }
 
 ### log Florent
