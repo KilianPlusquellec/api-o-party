@@ -621,6 +621,47 @@ router.post('/event/:id/participate', authenticateToken, participationController
 router.patch('/event/:id/participate/accept', authenticateToken, participationController.hostApproval); //l'hôte confirme une participation à un évènement
 
 /**
+ * PATCH /event/:id/participate/decline
+ * @summary Cancel participation request
+ * @description The host can cancel a user's participation request for an event
+ * @tags participation
+ * @security Bearer
+ * @param {string} id.path.required - event id
+ * @param {string} participation.id.required - participation id
+ * @param {string} user.id.required - user id '(token)' (host)
+ * @param {object} request.body.required - participation request
+ * @example request - participation table id
+ * {
+ * "id": 1
+ * }
+ * @returns {string} 204 - Participation canceled - application/json
+ * @example response - 204 - Participation canceled
+ * {
+ * "message": "Participation canceled."
+ * }
+ * @returns {string} 403 - Access denied, this is not your event - application/json
+ * @example response - 403 - Access denied, this is not your event
+ * {
+ * "message": "Access denied, this is not your event"
+ * }
+ * @returns {string} 404 - Event or participation not found - application/json
+ * @example response - 404 - Event or participation not found
+ * {
+ * "message": "Event not found"
+ * }
+ * @example response - 404 - Participation not found
+ * {
+ * "message": "Participation not found"
+ * }
+ * @returns {string} 400 - Invalid request - application/json
+ * @example response - 400 - Invalid request
+ * {
+ * "error": "Invalid request"
+ * }
+ */
+router.delete('/event/:id/participate/decline', authenticateToken, participationController.hostCancelParticipation); //l'hôte refuse une participation à un évènement
+
+/**
  * DELETE /event/:id/participate/cancel
  * @summary the user cancel his event participation
  * @description the user can cancel his participation request before or after the request beeing approuved by the host
@@ -688,7 +729,7 @@ router.delete('/event/:id/participate/cancel', authenticateToken, participationC
  * "error": "request error"
  * }
  */
-router.get('/event/:id/participate/all', participationController.listAllParticipation); //liste des participants
+router.get('/event/:id/participate/all', authenticateToken, participationController.listAllParticipation); //liste des participants
 
 
 
