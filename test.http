@@ -140,6 +140,15 @@ Content-Type: application/json
   "id": 6
 }
 
+#### l'utilisateur (hôte) refuse une demande de participation
+DELETE   {{endpoint}}/event/2/participate/decline
+Content-Type: application/json
+Authorization:  Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzI0MDcyNDkxLCJleHAiOjE3MjQwNzYwOTF9.sKbkBdTyCvMohLgkJRn52vNK6RV4oS61kIy5ayOPPLk
+
+{
+  "id": 1
+}
+
 ### annuler sa participation à un évènement 
 DELETE  {{endpoint}}/event/1/participate/cancel
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzIxMDUxNDM0LCJleHAiOjE3MjEwNTUwMzR9.UcTi94G1z2ZZhyaaDK0dguSqlf7jX1wnHhC3XqKR1j8

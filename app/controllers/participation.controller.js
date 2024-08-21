@@ -110,6 +110,40 @@ async  hostApproval(req, res) {
   }
 },
 
+//--------------L'HOTE ANNULE LA PARTICIPATION D'UN UTILISATEUR------------
+
+async hostCancelParticipation(req, res) {
+  try {
+    const { id } = req.params; // ID de l'évènement à partir des paramètres de la route
+    const event_participationId = req.body.id; // ID de la participation de l'event à partir du corps de la requête
+    const userId = req.user.id; // ID de l'utilisateur à partir du token JWT
+
+    // On vérifie si l'évènement existe
+    const event = await Event.findByPk(id);
+    if (!event) {
+      return res.status(404).json({ message: 'Event not found' });
+    }
+
+    // Vérifier si l'utilisateur est bien l'hôte de l'évènement
+    if (event.user_id !== userId) {
+      return res.status(403).json({ message: 'Access denied, this is not your event' });
+    }
+
+    // On vérifie si la participation existe
+    const participation = await Participation.findByPk(event_participationId);
+    if (!participation) {
+      return res.status(404).json({ message: 'Participation not found' });
+    }
+
+    // Supprimer la participation
+    await participation.destroy();
+
+    return res.status(204).json({ message: 'Participation canceled' });
+  } catch (error) {
+    res.status(400).json({ error: 'Invalid request' });
+  }
+},
+
   //--------------ANNULER SA PARTICIPATION A UN EVENT------------
 
   async cancelParticipation(req, res) {
